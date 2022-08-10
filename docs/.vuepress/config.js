@@ -1,6 +1,7 @@
 module.exports = {
     title: 'somebody study文档',
     description: 'vue,typescript,nuxt',
+    // theme:'reco',// 这个主题有问题
     themeConfig:{
         // 官方文档：https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E5%AF%BC%E8%88%AA%E6%A0%8F
         // 导航栏
@@ -39,6 +40,8 @@ module.exports = {
                     { title: "泛型", path: "/handbook/Generics" }
                   ],
             }
-        ]
+        ],
+            subSidebar: 'auto'
+
     }
   }
