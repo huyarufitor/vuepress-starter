@@ -34,12 +34,22 @@ module.exports = {
             },
             {
                 title:'基础学习',
-                path:'/handbok/ConditionalTypes',
+                path:'/basic/js',
                 collapsable:false,
                 children: [
-                    { title: "跳版机", path: "/handbook/ConditionalTypes" },
-                    { title: "泛型", path: "/handbook/Generics" }
+                    { title: "html", path: "/basic/html" },
+                    { title: "css", path: "/basic/css" },
+                    { title: "js", path: "/basic/js" },
                   ],
+            },
+            {
+                title:'前端',
+                path:'/javascript/ts/01',
+                collapsable:false,
+                children:[
+                    {title:"01",path:"/javascript/ts/01.md"},
+                    {title:"02",path:'/javascript/ts/02.md'}
+                ]
             }
         ],
             subSidebar: 'auto'
