@@ -48,8 +48,13 @@ module.exports = {
                 collapsable:false,
                 children:[
                     {title:"01",path:"/javascript/ts/01.md"},
-                    {title:"02",path:'/javascript/ts/02.md'}
+                    {title:"11 ts范型-Generics",path:'/javascript/ts/11.md'}
                 ]
+            },
+            {
+                title:'服务器相关',
+                path:'/server/01',
+                collapsable:false,
             }
         ],
             subSidebar: 'auto'
