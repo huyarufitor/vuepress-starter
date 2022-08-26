@@ -263,17 +263,61 @@
  * @param {number} n
  * @return {number}
  */
-let n=5
+let n=78
 let sum = 0;
 // 递归---典型的斐波那契数列
  var numWays = function(n) {
-    if(n=1){
-        sum = sum+n;
+    // if(n==0 || n==1){
+    //     return 1;
+    // }else if(n==2){
+    //     return 2;
+    // }else{
+    //     return numWays(n-2)+ numWays(n-1);
+    // }
+    
+    var n1 = 1, n2 = 2, sum;
+    if(n<=2){
+        return n;
+    }else{
+        for (let i = 2; i < n; i++) {
+            sum = n1 + n2
+            n1 = n2
+            // 为啥是先让num取模，再赋值给n2,不是先n2,再取模。
+            n2 = sum % 1000000007;
+        }
     }
-    while(n>2){
-   
-        sum = numWays(n-1)+numWays(n-2);
-    }
-    return sum;
+    return n2;
 };
 console.log('object',numWays(n)); 
+
+// 青蛙跳台阶问题： f(0)=1f(0)=1 , f(1)=1f(1)=1 , f(2)=2f(2)=2 ；
+// 斐波那契数列问题： f(0)=0f(0)=0 , f(1)=1f(1)=1 , f(2)=1f(2)=1 。
+
+// 作者：jyd
+// 链接：https://leetcode.cn/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/solution/mian-shi-ti-10-ii-qing-wa-tiao-tai-jie-wen-ti-dong/
+// 来源：力扣（LeetCode）
+// 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+/**
+ * F(0) = 0,   F(1) = 1
+ * F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
+ * 0 1 1 2 3 5 8
+ * @param {number} n
+ * @return {number}
+ */
+//  var fib = function(n) {
+//     var n1 = 1, n2 = 1, sum;
+//     if(n<=2){
+//         return n-1;
+//     }else{
+//         for (let i = 2; i < n; i++) {
+//             sum = n1 + n2
+//             n1 = n2
+//             // 为啥是先让num取模，再赋值给n2,不是先n2,再取模。
+//             n2 = sum % 1000000007;
+//         }
+//     }
+//     return n2;
+// };
+// console.log('fib',fib(0));
+
+// 有限状态自动机 判断字符串类型的数组
