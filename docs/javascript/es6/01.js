@@ -263,32 +263,32 @@
  * @param {number} n
  * @return {number}
  */
-let n=78
-let sum = 0;
-// 递归---典型的斐波那契数列
- var numWays = function(n) {
-    // if(n==0 || n==1){
-    //     return 1;
-    // }else if(n==2){
-    //     return 2;
-    // }else{
-    //     return numWays(n-2)+ numWays(n-1);
-    // }
+// let n=78
+// let sum = 0;
+// // 递归---典型的斐波那契数列
+//  var numWays = function(n) {
+//     // if(n==0 || n==1){
+//     //     return 1;
+//     // }else if(n==2){
+//     //     return 2;
+//     // }else{
+//     //     return numWays(n-2)+ numWays(n-1);
+//     // }
     
-    var n1 = 1, n2 = 2, sum;
-    if(n<=2){
-        return n;
-    }else{
-        for (let i = 2; i < n; i++) {
-            sum = n1 + n2
-            n1 = n2
-            // 为啥是先让num取模，再赋值给n2,不是先n2,再取模。
-            n2 = sum % 1000000007;
-        }
-    }
-    return n2;
-};
-console.log('object',numWays(n)); 
+//     var n1 = 1, n2 = 2, sum;
+//     if(n<=2){
+//         return n;
+//     }else{
+//         for (let i = 2; i < n; i++) {
+//             sum = n1 + n2
+//             n1 = n2
+//             // 为啥是先让num取模，再赋值给n2,不是先n2,再取模。
+//             n2 = sum % 1000000007;
+//         }
+//     }
+//     return n2;
+// };
+// console.log('object',numWays(n)); 
 
 // 青蛙跳台阶问题： f(0)=1f(0)=1 , f(1)=1f(1)=1 , f(2)=2f(2)=2 ；
 // 斐波那契数列问题： f(0)=0f(0)=0 , f(1)=1f(1)=1 , f(2)=1f(2)=1 。
@@ -320,4 +320,194 @@ console.log('object',numWays(n));
 // };
 // console.log('fib',fib(0));
 
-// 有限状态自动机 判断字符串类型的数组
+// 有限状态自动机 判断字符串类型的数组---不会
+
+
+
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @return {number[]}
+ */
+// let arr = [0,1,1,1,4,5,3,7,7,8,10,2,7,8,0,5,2,16,12,1,19,15,5,18,2,2,22,15,8,22,17,6,22,6,22,26,32,8,10,11,2,26,9,12,9,7,28,33,20,7,2,17,44,3,52,27,2,23,19,56,56,58,36,31,1,19,19,6,65,49,27,63,29,1,69,47,56,61,40,43,10,71,60,66,42,44,10,12,83,69,73,2,65,93,92,47,35,39,13,75];
+// let  k = 75;
+// var compare = function (x, y) {//比较函数
+//     if (x < y) {
+//         return -1;
+//     } else if (x > y) {
+//         return 1;
+//     } else {
+//         return 0;
+//     }
+// }
+//  var getLeastNumbers = function(arr, k) {
+//     let minKArr = [];
+//     for(let i=0;i<k;i++){
+//         minKArr.push(arr.sort(compare)[i]);
+//     }
+//     console.log('minKArr',minKArr);
+//     return minKArr;
+// };
+// getLeastNumbers(arr,k);
+
+// ————————————————
+// 版权声明：本文为CSDN博主「idomyway」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+// 原文链接：https://blog.csdn.net/idomyway/article/details/80544509
+
+/**
+ * 剑指 Offer 53 - II. 0～n-1中缺失的数字---一直不对，是我没弄懂题目吗？？？
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+//  var missingNumber = function(nums) {
+//     for(let i=0;i<nums.length;i++){
+//         if(i!==nums[i]){
+//             return i;
+//         }
+//     }
+// };
+// console.log('object',missingNumber([0,1,3]));
+// 判断二叉树是否是对称二叉树。
+// const check = (p: TreeNode | null, q: TreeNode | null): boolean => {
+//     if (!p && !q) return true;
+//     if (!p || !q) return false;
+//     return p.val === q.val && check(p.left, q.right) && check(p.right, q.left);
+// }
+// var isSymmetric = function(root: TreeNode | null): boolean {
+//     return check(root, root);
+// };
+
+// 作者：LeetCode-Solution
+// 链接：https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/solution/dui-cheng-de-er-cha-shu-by-leetcode-solu-rgks/
+// 来源：力扣（LeetCode）
+// 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+// 剑指 Offer 17. 打印从1到最大的n位数---done;
+// 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+
+// 示例 1:
+
+// 输入: n = 1
+// 输出: [1,2,3,4,5,6,7,8,9]
+
+// 来源：力扣（LeetCode）
+// 链接：https://leetcode.cn/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof
+// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+/**
+ * @param {number} n
+ * @return {number[]}
+ */
+//  var printNumbers = function(n) {
+//     let res = [];
+//     for(let i=1;i<Math.pow(10,n);i++){
+//         res.push(i);
+//     }
+//     return res;
+// };
+// console.log('121',printNumbers(2));
+
+/**
+ * 剑指 Offer 15. 二进制中1的个数 ---done
+ * 编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为 汉明重量).）。
+ * 
+ * 输入：n = 11 (控制台输入 00000000000000000000000000001011)
+输出：3
+解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/er-jin-zhi-zhong-1de-ge-shu-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ */
+/**
+ * @param {number} n - a positive integer
+ * @return {number}
+ */
+//  var hammingWeight = function(n) {
+//     let res = [];
+//     let num = 0;
+//     // toString(2) 可以直接将10进制转成2进制；
+//     // Array.from() 将字符串转数组
+//     res = Array.from(n.toString(2));
+//     res.forEach(element => {
+//         // console.log('element',element);
+//         if(element==='1'){
+//             num++;
+//         }
+//     });
+//     return num;
+// };
+// console.log('object',hammingWeight(128));
+/**
+ * 剑指 Offer 29. 顺时针打印矩阵
+ * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
+ * 输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+ * 输出：[1,2,3,6,9,8,7,4,5]
+ */
+
+/**
+ * @param {number[][]} matrix
+ * @return {number[]}
+ */
+// let matrix = [[1,2,3,0],[4,5,6,10],[7,8,9,19]];
+//  var spiralOrder = function(matrix) {
+//     if(matrix.length===0){
+//         return [];
+//     }
+//     let t = 0,r = matrix.length-1,l = 0, b = matrix.length-1;
+//     console.log('object',t,r,l,b);
+//     let resArr = [];
+//     while(true){
+//         for(let i=l;i<=r;i++){// 从左走到右
+//             resArr.push(matrix[t][i]);
+//         }
+//         if(++t>b) break;// 判断是否到了下边界，到了，就终止循环
+//         console.log('t',t);
+//         for(let i = t ;i<=b;i++){
+//             resArr.push([i][r]);
+//         }
+//         if(--r<l) break;//是否到了左边界
+//         for(let i= r;i>=l;i--){
+//             resArr.push([b][i]);
+//         }
+//         if(--b<t) break;
+//         for(let i = b;i>=t;i--){
+//             resArr.push([i][l]);
+//         }
+//         if(++l>r) break;
+    
+//     }
+//     return resArr;
+// };
+// console.log('spiralOrder',spiralOrder(matrix));
+
+/**
+ * 剑指 Offer 61. 扑克牌中的顺子
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+let nums = [1,2,12,3,0];
+ var isStraight = function(nums) {
+    // let sortArr = nums.sort();
+    let max = 0;
+    let min = 14;
+    let repeat = new Set();
+    // 先遍历，如果是0就跳过，如果有最小值，就set到setObj对象里去；
+    for(num of nums){
+        console.log('num',num);
+        if(num === 0)
+        continue;
+        max = Math.max(max,num);
+        min = Math.min(min,num);
+
+        if(repeat.has(num)){
+            return false;
+        }
+        repeat.add(num);
+    }
+    // console.log('max',max);
+    // console.log('min',min);
+    // 如果最大-最小<5,就是顺子，如果>=5，就不是顺子
+    return max-min<5;
+};
+console.log('object',isStraight(nums)); 
