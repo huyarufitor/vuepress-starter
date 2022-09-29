@@ -9,7 +9,7 @@ module.exports = {
         nav:[
             {text:'首页',link:'/'},
             {
-                text:'八妹 的前端乱七八糟博客',
+                text:'八妹 的前端乱七八糟博客dada',
                 items: [
                     { text: '前端', link: 'https://github.com/huyarufitor' },
                     { text: '后端', link: 'https://juejin.cn/user/712139234359182/posts' },
