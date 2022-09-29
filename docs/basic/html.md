@@ -1,5 +1,5 @@
 
-# 001 跳板机
+# 001 跳板机  --stu[id]
 
 # cd ~/.ssh && ssh-add *
 ```javascript
