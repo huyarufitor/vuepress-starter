@@ -56,6 +56,11 @@ module.exports = {
                 path:'/server/01',
                 collapsable:false,
             }
+            {
+                title:'vue+ts',
+                path:'/vue/00',
+                collapsable:false,
+            },
         ],
             subSidebar: 'auto'
 
