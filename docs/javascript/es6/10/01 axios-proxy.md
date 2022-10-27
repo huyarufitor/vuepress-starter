@@ -52,9 +52,9 @@ app.use('/api',proxy({ target: 'http:127.0.0.1:4000',changeOrigin:true}));
 module.exports = app
 ```
 
-三、通过配置nginx 实现代理
+#### 3、通过配置nginx 实现代理
 
-```javasript
+```bash
 server{
     listen 80;
     # server_name www.xxx.im
@@ -72,3 +72,4 @@ server{
     }
 }
 ```
+
