@@ -21,5 +21,8 @@
   "devDependencies": {
     "vuepress": "^1.9.7",
     "vuepress-theme-reco": "^1.6.14"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10"
   }
 }
