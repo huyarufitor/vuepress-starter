@@ -72,4 +72,31 @@ export default defineComponent({
  *
  * 
 */
+/**
+ * 一vue3 的
+ * 通过this.$refs.form 获取 添加了<div ref="form"></div>的标签对应的dom元素；
+ * 或者：this.$refs['component'] 获取到的是添加了ref="component"属性的组件；
+ * 
+ * //给标签使用
+ *  <input type="text" ref="ipt"/>
+ * 给组件使用
+ * <comp-detail ref="component"></comp-detail>
+ * <button @click="confirm">确定</button>
+ * vue2--用法
+ * const confirm = ()=>{
+ * console.log(this.$refs.ipt.value)  //打印出输入框中的value值
+ * this.$refs['component'].init()     //调用组件comp-detail中的init()方法
+
+ * }
+ * 
+ * vue3--用法 
+ * <child ref="" />
+ * setup() {
+    const commonFilter = ref<typeof commonFilterBox | null>(null);
+    const show=()=>{
+        console.log(commonFilter.value)// proxy；
+    }
+}
+ */
+
 </script>
