@@ -1,4 +1,4 @@
-export const allProList = [
+let resultQAs = [
   {
     index: 0,
     id: "es6",
@@ -41,13 +41,7 @@ export const allProList = [
     mdLocation: "/01.md",
     marked: 0,
   },
-  {
-    index: 6,
-    id: "js",
-    title: "闭包",
-    mdLocation: "/01.md",
-    marked: 0,
-  },
+  { index: 6, id: "js", title: "闭包", mdLocation: "/01.md", marked: 0 },
   {
     index: 7,
     id: "vue",
@@ -61,7 +55,7 @@ export const allProList = [
     id: "vue",
     title: "vue 自定义指令directive的封装",
     mdLocation: "/01.md",
-    marked: 0,
+    marked: 1,
   },
   {
     index: 9,
@@ -174,18 +168,8 @@ export const allProList = [
     title: "script setup 的语法作用",
     mdLocation: "/01.md",
   },
-  {
-    index: 25,
-    id: "vue3",
-    title: "ref、toRef、toRefs",
-    mdLocation: "/01.md",
-  },
-  {
-    index: 26,
-    id: "vue3",
-    title: "ref、toRef、toRefs",
-    mdLocation: "/01.md",
-  },
+  { index: 25, id: "vue3", title: "ref、toRef、toRefs", mdLocation: "/01.md" },
+  { index: 26, id: "vue3", title: "ref、toRef、toRefs", mdLocation: "/01.md" },
   {
     index: 27,
     id: "51条信息,2天学一次？？？？！！",
