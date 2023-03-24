@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习操作IndexedDB</title>
+    <script src="./operate.js"></script>
+</head>
+
+<body>
+    <button>你好呀，在学习呢！～</button>
+</body>
+<script>
+    let DB;
+    openDB('class', 1).then((db) => {
+        DB = db
+        // console.log('db', DB);
+        let data = {
+            userid: new Date(),
+            name: 'taka',
+            age: Math.round(Math.random() * 10),
+        }
+        let key = 8;
+        addData(DB, 'users', data);
+        getData(DB, 'users', key);
+        getDataByCursor(DB, 'users', key);
+    })
+
+</script>
+
+</html>
