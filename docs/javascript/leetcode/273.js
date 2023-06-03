@@ -1,7 +1,7 @@
 const numberToWords = function (num) {
     let gewei = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
     let single = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-    let shiwei = ['', 'ten', 'Tweenty', 'Thirty', 'Fourty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    let shiwei = ['', 'Ten', 'Tweenty', 'Thirty', 'Fourty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
     let baiwei = ['',  'Thousand', 'Million', 'Billion'];
     let recursion = (curr, num) => {
         //迭代计算每三位一个
