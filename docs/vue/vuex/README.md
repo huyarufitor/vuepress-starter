@@ -39,3 +39,30 @@ methods:{
     }
 }
 ```
+
+### getters
+
+允许在store中定义getter函数，相当于store的计算属性
+
+```javascript
+getters:{
+    doneTodos(state){
+        return state.todos.filter(todo=>todo.done)
+    },
+    doneTodosCount (state, getters) {
+        return getters.doneTodos.length
+    }
+}
+```
+
+组件中使用：
+
+```javascript
+
+    <div>列表长度为：{{doneTodosCount()}}</div>
+    computed:{
+        doneTodosCount(){
+            return this.$store.getters.doneTodosCount
+        }
+    }
+```
