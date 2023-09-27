@@ -7,7 +7,7 @@ function calculateDuration(start, end) {
     const durationInHours = (durationInMs / (1000 * 60 * 60));
     return durationInHours.toFixed(2)-1.5;
   }
-  console.log(calculateDuration('09:50','20:25'))
+  console.log(calculateDuration('09:44:00','19:38:00'))
 /**09:56,19:52 --8.4
  09:57,19:20 --7.9
 09:51,19:51 --8.5

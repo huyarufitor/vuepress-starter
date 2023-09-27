@@ -1,4 +1,4 @@
-# ES5/ES6 的继承除了写法以外还有什么区别？
+# ES5/ES6 的继承除了写法以外还有什么区别？----待细研究
 
 1. `class` 声明会提升，但不会初始化赋值。（类似于 `let、const` 声明变量；
 2. `class` 声明内部会启用严格模式；
@@ -6,3 +6,25 @@
 4. `class` 的所有方法（包括静态方法和实例方法）都没有原型对象 `prototype`，所以也没有 `[[constructor]]`，不能使用 `new` 来调用；
 5. 必须使用 `new` 来调用 `class`；
 6. `class` 内部无法重写类名；
+7. `class` 的本质是function,
+
+```javascript
+
+class SearchOption {
+  static appIDList = []
+  static customerList = []
+  static accountCompanyList = []
+  static async initAppid(params) {
+   init const { code, data } = await GetAppIdList(params)
+    if (code === 200) {
+      this.appIDList = data.list.map(item => {
+        return {
+          label: `${item.app_id} ${item.app_name}` || ' ',
+          value: item.app_id
+        }
+      })
+    }
+  }
+}
+ ```
+ 
