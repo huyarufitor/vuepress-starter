@@ -55,4 +55,38 @@ const asyncReadFile = async function(){
 （2）更好的语义。async和await，比起星号和yield，语义更清楚了。async表示函数里有异步操作，await表示紧跟在后面的表达式需要等待结果。
 （3）更广的适用性。co模块约定，yield命令后面只能是Thunk函数或Promise对象，而async函数的await命令后面，可以是Promise对象和原始类型的值（数值、字符串和布尔值，但这时等同于同步操作）。
 （4）返回值是Promise。async函数的返回值是Promise对象，这比Generator函数的返回值是Iterator对象方便多了。你可以用then方法指定下一步的操作。
-```js
+
+#### Iterator是一种迭代器对象,它可以用来**遍历数据集合**。Generator函数返回的iterator对象可以通过调用next()方法来依次获取函数内部yield表达式的值，直到函数运行结束或遇到return语句；
+
+next 方法返回两个字段，一个done 表示迭代是否结束，一个value 是yield表达式的值。当done为true的时候，没value这个属性
+ 比如：
+
+```javascript
+ function iteratorFunc(){
+    let arr=[...arguments]
+    let nIndex=0
+    return {
+        next:()=>{
+            return nIndex<arr.length?
+            {value:arr[nIndex++],done:false}:{done:true}
+        }
+    }
+}
+let a=iteratorFunc(1,2,3)
+console.log(a.next())//{done:false,value:1}
+console.log(a.next())//{done:false,value:2}
+console.log(a.next())//{done:false,value:3}
+console.log(a.next())//{done:true}
+
+let arr =['我','想','上','厕所']
+let ba = arr[Symbol.iterator]()
+ba.next() //{value: "我", done: false}
+ba.next() //{value: "想", done: false}
+ba.next() //{value: "上", done: false}
+ba.next() //{value: "厕所", done: false}
+ba.next() //{value: undefined, done: true}
+ ```
+
+**有些JS内置的对象就是可迭代的，比如String，Array。**
+
+#### 而Promise对象表示一个异步操作的最终完成或失败状态，并可以通过then()方法来获取异步操作的结果；
