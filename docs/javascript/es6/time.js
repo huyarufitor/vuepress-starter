@@ -7,25 +7,26 @@ function calculateDuration(start, end) {
     const durationInHours = (durationInMs / (1000 * 60 * 60));
     return durationInHours.toFixed(2)-1.5;
   }
+  console.log(calculateDuration('09:51:00','19:46:00'));
   /** 10月 */
-  const month = calculateDuration('09:51:00','19:56:00') + 
-  calculateDuration('09:52:00','19:57:00') + 
-  calculateDuration('09:45:00','19:15:00')+
-   calculateDuration('09:50:00','20:05:00')+
-    calculateDuration('09:40:00','19:33:00') +
-    calculateDuration('09:51:00','19:39:00')+
-    calculateDuration('09:51:00','19:57:00')+
-   calculateDuration('09:50:00','19:48:00') +
-   calculateDuration('09:57:00','19:35:00') +
-   calculateDuration('09:51:00','19:25:00')+
-   calculateDuration('09:51:00','19:46:00')+
-   calculateDuration('09:50:00','20:19:00')+
-   calculateDuration('09:49:00','19:32:00')+
-   calculateDuration('09:50:00','19:51:00')+
-   calculateDuration('09:51:00','19:46:00')+
-   calculateDuration('09:50:00','19:49:00')+
-   calculateDuration('09:51:00','20:25:00')
-   console.log('month',month,month/17);
+  // const month = calculateDuration('09:51:00','19:56:00') + 
+  // calculateDuration('09:52:00','19:57:00') + 
+  // calculateDuration('09:45:00','19:15:00')+
+  //  calculateDuration('09:50:00','20:05:00')+
+  //   calculateDuration('09:40:00','19:33:00') +
+  //   calculateDuration('09:51:00','19:39:00')+
+  //   calculateDuration('09:51:00','19:57:00')+
+  //  calculateDuration('09:50:00','19:48:00') +
+  //  calculateDuration('09:57:00','19:35:00') +
+  //  calculateDuration('09:51:00','19:25:00')+
+  //  calculateDuration('09:51:00','19:46:00')+
+  //  calculateDuration('09:50:00','20:19:00')+
+  //  calculateDuration('09:49:00','19:32:00')+
+  //  calculateDuration('09:50:00','19:51:00')+
+  //  calculateDuration('09:51:00','19:46:00')+
+  //  calculateDuration('09:50:00','19:49:00')+
+  //  calculateDuration('09:51:00','20:25:00')
+  //  console.log('month',month,month/17);
   /**
    * 09:51,19:56	09:52,19:57	09:45,19:15	09:50,20:05	09:40,19:33	09:51,19:39	09:51,19:57
    * 	09:50,19:48	09:57,19:35	09:51,19:25	09:51,19:46	09:50,20:19	09:49,19:32	09:50,19:51	09:51,19:46	09:50,19:49	09:51,20:25	
