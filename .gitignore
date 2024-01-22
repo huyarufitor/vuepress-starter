@@ -2,3 +2,6 @@ node_modules,
 docs/.vuepress/dist
 node_modules
 docs/vue/.DS_Store
+docs/interview/.DS_Store
+.DS_Store
+docs/.DS_Store
