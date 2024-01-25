@@ -4,8 +4,8 @@
 #demo {
   width: 0;
   height: 0;
-  border-width: 20;
-  border-style: "solid";
+  border-width: 20px;
+  /* border-style: "solid"; */
   border-color: transparent transparent red transparent;
 }
 ```

@@ -7,14 +7,14 @@
 ```
 
 ```css
-<!-- 1 -->
+<!-- 1  使用flex -->
 div.parent {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;// 子元素在主轴上的对齐
+  align-items: center;//子元素在交叉轴上的对齐
 }
 
-<!-- 2 -->
+<!-- 2 子绝父相-->
 div.parent {
   position: relative;
 }
@@ -30,8 +30,8 @@ div.parent {
   display: grid;
 }
 div.child {
-  justify-self: center;
-  align-self: center;
+  justify-self: center; // 网格项在水平方向的对齐
+  align-self: center; // 网格项在垂直方向的对齐
 }
 
 <!-- 4 -->

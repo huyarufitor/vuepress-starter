@@ -8,7 +8,7 @@ BFC（Block Format Context）块级格式化上下文，是页面盒模型中的
 2. `float` 浮动
 3. 绝对定位
 4. `overflow` 不为 `visible`
-5. `display` 为表格布局或者弹性布局；
+5. `display` 为表格布局或者弹性布局 `table` 或`flex`；
 
 `BFC` 主要的作用是：
 
