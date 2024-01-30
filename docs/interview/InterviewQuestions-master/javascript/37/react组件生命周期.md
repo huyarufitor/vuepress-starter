@@ -17,4 +17,5 @@
 
 ## 析构阶段
 
-1. componentWillUnmount()：主要执行清除工作，比如取消网络请求，清除事件监听。
+1. componentWillUnmount()：主要执行清除工作，比如取消网络请求，清除事件监听
+  
