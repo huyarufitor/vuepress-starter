@@ -6,5 +6,16 @@
 
 ### 引申---"什么是diff算法"
 
+## ['1','2','3'].map(parseInt) 的结果是什么，为什么会这样？
 
+```javascript [1,NaN,NaN]```
 
+因为完整的代码是
+
+```javascript
+['1', '2', '3'].map((item, index) => {
+return parseInt(item, index)
+})
+```
+
+parseInt('1',0) 0进制的1得到1；parseInt('2',1) 1进制最大不能超过0；2进制最大不能超过1；
