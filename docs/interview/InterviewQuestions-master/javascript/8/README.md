@@ -47,3 +47,34 @@ async function asyncFunction() {
 
 asyncFunction()
 ```
+
+### 解释
+
+当你运行这段代码时，输出结果将按照以下顺序出现：
+
+Hello, setTimeout
+Hello, Promise
+Hello, Async/Await
+让我们分析为什么会这样执行输出：
+
+setTimeout
+这段代码首先设置了一个setTimeout，它被设置为在1000毫秒（1秒）后执行。setTimeout是非阻塞的，这意味着代码的执行不会在这里停止等待，而是继续执行下去。
+
+Promise
+接下来，代码创建了一个Promise，它同样使用了setTimeout来在1000毫秒后解决（resolve）。由于Promise的执行也是非阻塞的，代码的执行继续向下移动，而不会在这里等待Promise解决。
+
+在Promise之后，有一个.then()调用，它注册了一个回调函数，这个回调函数会在Promise解决时执行。但是，这个回调函数不会立即执行，它会等到Promise实际解决后才执行。
+
+Async/Await
+最后，代码定义了一个异步函数asyncFunction，该函数内部使用await关键字等待一个延迟（通过delay函数实现，它返回一个在1000毫秒后解决的Promise）。asyncFunction被立即调用。
+
+由于await关键字的使用，asyncFunction内部的执行会在await表达式处暂停，直到Promise解决。这意味着console.log('Hello, Async/Await')的执行会等待大约1000毫秒。
+
+执行顺序分析
+所有的setTimeout和Promise操作都被设置为在大约1000毫秒后执行。
+JavaScript事件循环和异步行为意味着即使这些操作都设置为在大约相同的时间执行，它们的完成顺序仍然是确定的。
+setTimeout回调、Promise解决（及其.then()回调），以及async/await操作都是异步操作，它们的执行顺序由事件循环管理。
+在这个例子中，setTimeout的回调首先执行，因为它是第一个被放入事件队列的。
+然后，Promise解决，并且其.then()回调被执行。
+最后，asyncFunction中的await delay(1000)完成，然后执行console.log('Hello, Async/Await')。
+因此，输出顺序为Hello, setTimeout -> Hello, Promise -> Hello, Async/Await。
