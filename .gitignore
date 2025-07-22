@@ -5,3 +5,5 @@ docs/vue/.DS_Store
 docs/interview/.DS_Store
 .DS_Store
 docs/.DS_Store
+
+*/.node_modules
