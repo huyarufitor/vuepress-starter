@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>串口通信工具</title>
+<style>
+  :root{ --bg:#111; --card:#1c1c1c; --fg:#eee; --muted:#aaa; --accent:#ffde6a; --edge:#333; }
+  *{ box-sizing:border-box; }
+  body{ font-family:ui-sans-serif,system-ui,Segoe UI,Arial; background:var(--bg); color:var(--fg); margin:0; padding:20px; }
+  .container{ max-width:800px; margin:0 auto; }
+  .panel{ background:var(--card); border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:0 6px 20px rgba(0,0,0,.35); }
+  .title{ font-weight:700; font-size:18px; letter-spacing:.06em; color:var(--accent); margin:0 0 16px; }
+  .section-title{ font-weight:600; font-size:14px; color:var(--muted); margin:16px 0 10px; padding-top:12px; border-top:1px dashed #2a2a2a; }
+  .section-title:first-of-type{ border-top:none; margin-top:0; }
+  .row{ margin:10px 0; display:flex; gap:10px; align-items:center; }
+  .row .grow{ flex:1; }
+  .small{ opacity:.8; font-size:12px; color:#888; }
+  label{ font-size:13px; display:block; margin-bottom:4px; }
+  input[type=text], textarea{ width:100%; background:#0f0f0f; border:1px solid #333; color:#eee; border-radius:8px; padding:8px 10px; font-family:monospace; }
+  textarea{ resize:vertical; min-height:80px; }
+  button{ background:#2b2b2b; color:#eee; border:1px solid #444; border-radius:8px; padding:8px 16px; cursor:pointer; font-size:14px; }
+  button:hover{ background:#333; }
+  button:disabled{ opacity:0.5; cursor:not-allowed; }
+  .status{ display:inline-block; padding:4px 10px; border-radius:6px; background:#2b2b2b; font-size:12px; }
+  .log-area{ background:#0a0a0a; border:1px solid #333; border-radius:8px; padding:12px; font-family:monospace; font-size:11px; line-height:1.6; max-height:300px; overflow-y:auto; }
+  .log-item{ margin:4px 0; }
+  .log-send{ color:#4ade80; }
+  .log-receive{ color:#60a5fa; }
+  .log-error{ color:#ef4444; }
+  .log-info{ color:#ffde6a; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- 串口连接面板 -->
+    <div class="panel">
+      <div class="title">📡 串口通信</div>
+      
+      <div class="section-title">连接控制</div>
+      <div class="row">
+        <button id="connectBtn">连接串口</button>
+        <div class="grow">
+          <span class="status" id="serialStatus" style="color:#6b7280;">未连接</span>
+        </div>
+      </div>
+      <div class="small">💡 需要HTTPS或localhost环境才能使用Web Serial API</div>
+    </div>
+
+    <!-- 数据发送面板 -->
+    <div class="panel">
+      <div class="title">📤 发送数据</div>
+      
+      <div class="section-title">发送内容（十六进制）</div>
+      <div class="row">
+        <div class="grow">
+          <label>输入要发送的十六进制数据（空格分隔，如: A5 01 FF）</label>
+          <input type="text" id="sendInput" placeholder="例如: A5 01 00 04 7F 00 46 64 12 34" />
+        </div>
+      </div>
+      <div class="row">
+        <button id="sendBtn" disabled>发送</button>
+        <button id="clearSendBtn">清空输入</button>
+      </div>
+      
+      <div class="section-title">快捷发送</div>
+      <div class="row">
+        <button id="sendTestBtn" disabled>发送测试数据</button>
+        <div class="small">（发送: A5 01 02 03）</div>
+      </div>
+    </div>
+
+    <!-- 数据接收面板 -->
+    <div class="panel">
+      <div class="title">📥 接收数据</div>
+      
+      <div class="section-title">通信日志</div>
+      <div class="log-area" id="logArea">
+        <div class="log-info">等待串口连接...</div>
+      </div>
+      <div class="row" style="margin-top:12px;">
+        <button id="clearLogBtn">清空日志</button>
+        <div class="small grow">自动滚动到最新消息</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ====== 串口通信模块 ====== */
+let serialPort = null;
+let writer = null;
+let reader = null;
+let readingData = false;
+
+// 日志管理
+function addLog(message, type = 'info') {
+  const logArea = document.getElementById('logArea');
+  const logItem = document.createElement('div');
+  logItem.className = `log-item log-${type}`;
+  
+  const timestamp = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+  logItem.textContent = `[${timestamp}] ${message}`;
+  
+  logArea.appendChild(logItem);
+  logArea.scrollTop = logArea.scrollHeight;
+}
+
+function clearLog() {
+  const logArea = document.getElementById('logArea');
+  logArea.innerHTML = '<div class="log-info">日志已清空</div>';
+}
+
+// 更新串口状态
+function updateSerialStatus(message, color) {
+  const statusElement = document.getElementById('serialStatus');
+  statusElement.textContent = message;
+  statusElement.style.color = color;
+}
+
+// 连接串口
+async function connectSerial() {
+  try {
+    if ('serial' in navigator) {
+      updateSerialStatus('正在连接...', '#ffde6a');
+      addLog('正在请求串口访问...', 'info');
+      
+      serialPort = await navigator.serial.requestPort();
+      await serialPort.open({ baudRate: 115200 });
+      writer = serialPort.writable.getWriter();
+      reader = serialPort.readable.getReader();
+      
+      // 启动数据读取
+      startReading();
+      
+      updateSerialStatus('已连接 (115200 bps)', '#4ade80');
+      addLog('串口连接成功 (115200 bps)', 'info');
+      document.getElementById('connectBtn').textContent = '断开连接';
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('sendTestBtn').disabled = false;
+    } else {
+      throw new Error('浏览器不支持Web Serial API，请使用Chrome或Edge浏览器');
+    }
+  } catch (error) {
+    console.error('串口连接失败:', error);
+    let errorMsg = '连接失败';
+    if (error.name === 'NotFoundError') {
+      errorMsg = '未选择串口设备';
+    } else if (error.name === 'NetworkError') {
+      errorMsg = '设备已被占用或无法访问';
+    } else {
+      errorMsg = '连接失败: ' + error.message;
+    }
+    updateSerialStatus(errorMsg, '#ef4444');
+    addLog(errorMsg, 'error');
+  }
+}
+
+// 断开串口
+async function disconnectSerial() {
+  try {
+    readingData = false;
+    
+    if (reader) {
+      await reader.cancel();
+      await reader.releaseLock();
+      reader = null;
+    }
+    if (writer) {
+      await writer.close();
+      writer = null;
+    }
+    if (serialPort) {
+      await serialPort.close();
+      serialPort = null;
+    }
+    updateSerialStatus('已断开', '#6b7280');
+    addLog('串口已断开', 'info');
+    document.getElementById('connectBtn').textContent = '连接串口';
+    document.getElementById('sendBtn').disabled = true;
+    document.getElementById('sendTestBtn').disabled = true;
+  } catch (error) {
+    console.error('串口断开失败:', error);
+    addLog('断开失败: ' + error.message, 'error');
+  }
+}
+
+// 读取串口数据
+async function startReading() {
+  readingData = true;
+  let buffer = new Uint8Array(0);
+  
+  try {
+    while (readingData && reader) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      
+      // 显示接收到的数据
+      const hexString = Array.from(value)
+        .map(b => '0x' + b.toString(16).padStart(2, '0').toUpperCase())
+        .join(' ');
+      addLog(`接收 (${value.length} 字节): ${hexString}`, 'receive');
+      
+      // 合并新数据到缓冲区
+      const newBuffer = new Uint8Array(buffer.length + value.length);
+      newBuffer.set(buffer);
+      newBuffer.set(value, buffer.length);
+      buffer = newBuffer;
+    }
+  } catch (error) {
+    console.error('读取串口数据失败:', error);
+    if (readingData) {
+      updateSerialStatus('读取数据失败', '#ef4444');
+      addLog('读取数据失败: ' + error.message, 'error');
+    }
+  }
+}
+
+// 发送数据
+async function sendData(dataArray) {
+  if (!writer) {
+    updateSerialStatus('串口未连接', '#ef4444');
+    addLog('发送失败: 串口未连接', 'error');
+    return;
+  }
+  
+  try {
+    await writer.write(dataArray);
+    
+    const hexString = Array.from(dataArray)
+      .map(b => '0x' + b.toString(16).padStart(2, '0').toUpperCase())
+      .join(' ');
+    addLog(`发送 (${dataArray.length} 字节): ${hexString}`, 'send');
+    
+  } catch (error) {
+    console.error('发送数据失败:', error);
+    let errorMsg = '发送失败';
+    if (error.name === 'NetworkError') {
+      errorMsg = '设备连接中断';
+      // 如果发送失败，可能需要重新连接
+      document.getElementById('connectBtn').textContent = '连接串口';
+      document.getElementById('sendBtn').disabled = true;
+      document.getElementById('sendTestBtn').disabled = true;
+      serialPort = null;
+      writer = null;
+      reader = null;
+    } else {
+      errorMsg = '发送失败: ' + error.message;
+    }
+    updateSerialStatus(errorMsg, '#ef4444');
+    addLog(errorMsg, 'error');
+  }
+}
+
+// 解析十六进制输入
+function parseHexInput(input) {
+  // 移除空格和其他分隔符，只保留十六进制字符
+  const hexString = input.replace(/[^0-9a-fA-F]/g, '');
+  
+  // 确保是偶数长度
+  if (hexString.length % 2 !== 0) {
+    throw new Error('十六进制字符串长度必须是偶数');
+  }
+  
+  // 转换为字节数组
+  const bytes = [];
+  for (let i = 0; i < hexString.length; i += 2) {
+    bytes.push(parseInt(hexString.substr(i, 2), 16));
+  }
+  
+  return new Uint8Array(bytes);
+}
+
+/* ====== 事件监听器 ====== */
+document.getElementById('connectBtn').addEventListener('click', async () => {
+  if (serialPort && serialPort.readable) {
+    await disconnectSerial();
+  } else {
+    await connectSerial();
+  }
+});
+
+document.getElementById('sendBtn').addEventListener('click', async () => {
+  const input = document.getElementById('sendInput').value.trim();
+  if (!input) {
+    addLog('发送失败: 输入为空', 'error');
+    return;
+  }
+  
+  try {
+    const dataArray = parseHexInput(input);
+    await sendData(dataArray);
+  } catch (error) {
+    addLog('发送失败: ' + error.message, 'error');
+  }
+});
+
+document.getElementById('sendTestBtn').addEventListener('click', async () => {
+  const testData = new Uint8Array([0xA5, 0x01, 0x02, 0x03]);
+  await sendData(testData);
+});
+
+document.getElementById('clearSendBtn').addEventListener('click', () => {
+  document.getElementById('sendInput').value = '';
+});
+
+document.getElementById('clearLogBtn').addEventListener('click', clearLog);
+
+// 支持回车发送
+document.getElementById('sendInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter' && !document.getElementById('sendBtn').disabled) {
+    document.getElementById('sendBtn').click();
+  }
+});
+
+/* ====== 初始化 ====== */
+addLog('串口通信工具已就绪', 'info');
+addLog('请点击"连接串口"按钮开始', 'info');
+</script>
+</body>
+</html>
