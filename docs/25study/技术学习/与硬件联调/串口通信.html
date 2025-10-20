@@ -123,11 +123,15 @@ async function connectSerial() {
     if ('serial' in navigator) {
       updateSerialStatus('正在连接...', '#ffde6a');
       addLog('正在请求串口访问...', 'info');
-      
+        // 显示电脑上的串口设备选择授权，或者显示已授权的串口设备列表
       serialPort = await navigator.serial.requestPort();
+        // getDevices方法可以返回已连接的授权过的设备列表
+        // const ports = await navigator.serial.getPorts();
+
+        // open 方法打开选中的串口设备后 进行数据交互,以波特率 115200 打开端口
       await serialPort.open({ baudRate: 115200 });
       writer = serialPort.writable.getWriter();
-      reader = serialPort.readable.getReader();
+      reader = serialPort.readable.getReader();//获取读取流
       
       // 启动数据读取
       startReading();
@@ -191,6 +195,7 @@ async function startReading() {
   
   try {
     while (readingData && reader) {
+        //读取数据
       const { value, done } = await reader.read();
       if (done) break;
       
@@ -198,6 +203,7 @@ async function startReading() {
       const hexString = Array.from(value)
         .map(b => '0x' + b.toString(16).padStart(2, '0').toUpperCase())
         .join(' ');
+        console.log('value',value,done);
       addLog(`接收 (${value.length} 字节): ${hexString}`, 'receive');
       
       // 合并新数据到缓冲区

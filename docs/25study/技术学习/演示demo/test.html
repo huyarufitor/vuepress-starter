@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 翻转效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        p {
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .box-container {
+            perspective: 1000px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        
+        .box {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+            transform-origin: center center;
+        }
+        
+        .box-container:hover .box {
+            transform: rotateX(30deg);
+        }
+        
+        .explanation {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .explanation h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            text-align: left;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS3 翻转效果演示</h1>
+        <p>将鼠标悬停在盒子上查看翻转效果</p>
+        
+        <div class="box-container">
+            <div class="box">悬停翻转</div>
+        </div>
+        
+        <div class="explanation">
+            <h2>实现原理</h2>
+            <p>这个效果使用了CSS3的transform属性，具体来说：</p>
+            <div class="code">
+.box-container:hover .box {<br>
+&nbsp;&nbsp;transform: rotateX(30deg);<br>
+}
+            </div>
+            <p>通过设置transform-origin定义变换的基点，并使用transition添加平滑过渡效果。</p>
+        </div>
+    </div>
+</body>
+</html>
